@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Check if PR is from 'dev' to 'main' or 'main'(original repo) to 'main'(forked repo)
         run: |
-          if [[ "$GITHUB_BASE_REF" != "dev" && "$GITHUB_BASE_REF" != "main" ]]; then
+          if [[ "$GITHUB_HEAD_REF" != "dev" && "$GITHUB_HEAD_REF" != "main" ]]; then
             echo "Error: Pull requests to 'main' must be from the 'dev' or 'main' branch."
             exit 1
           fi
