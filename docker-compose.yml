@@ -3,11 +3,11 @@ name: tailormap
 volumes:
   db:
   backup:
-    name: ${COMPOSE_PROJECT_NAME}-backup
+    name: ${COMPOSE_PROJECT_NAME:-tailormap-viewer-db}-backup
 
 services:
   tailormap:
-    container_name: ${COMPOSE_PROJECT_NAME}-server
+    container_name: ${COMPOSE_PROJECT_NAME:-tailormap-viewer}-server
     image: ${TAILORMAP_IMAGE:-ghcr.io/b3partners/tailormap}:${VERSION:-snapshot}
     # Building is optional, only when adding extra Angular libraries with additional components
     build:
