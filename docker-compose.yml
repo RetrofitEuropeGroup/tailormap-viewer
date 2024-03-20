@@ -13,9 +13,9 @@ services:
     build:
       # This GitHub repository contains an empty Angular project with the NPM packages from tailormap as
       # dependencies
-      context: https://github.com/B3Partners/tailormap-starter.git
+      context: https://github.com/RetrofitEuropeGroup/tailormap-starter.git
       args:
-        API_VERSION: ${VERSION}
+        API_VERSION: ${VERSION:-snapshot}
         ADD_NG_LIBRARIES: ${ADD_NG_LIBRARIES:-}
         APPEND_NPMRC: ${APPEND_NPMRC:-}
     networks:
