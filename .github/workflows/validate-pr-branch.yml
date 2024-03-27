@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  check-base-branch:
+  check-head-branch:
     runs-on: ubuntu-latest
     steps:
       - name: Check if PR is from 'dev' to 'main' or 'main'(original repo) to 'main'(forked repo)
