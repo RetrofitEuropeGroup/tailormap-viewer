@@ -52,7 +52,7 @@ services:
       - db
 
   db:
-    container_name: ${COMPOSE_PROJECT_NAME}-db
+    container_name: ${COMPOSE_PROJECT_NAME:-tailormap-viewer}-db
     image: postgres:15.6-alpine3.18
     environment:
       POSTGRES_PASSWORD: ${TAILORMAP_DB_PASSWORD:-tailormap}
