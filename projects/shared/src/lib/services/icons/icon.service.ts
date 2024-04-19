@@ -19,7 +19,7 @@ export class IconService {
     'trash_filled', 'table_outline', 'logo', 'layers_filled', 'zoom_max', 'coordinates',
     'folder_filled', 'folder_outline', 'filter_filled', 'filter_outline', 'user', 'login', 'plus', 'minus',
     'check', 'check_all', 'uncheck_all', 'edit', 'edit_square', 'info', 'reset', 'reorder', 'location_searching',
-    'visibility_off', 'visibility', 'my_location', 'key', 'settings',
+    'visibility_off', 'visibility', 'my_location', 'key', 'settings', 'fullscreen', 'fullscreen_exit',
     { folder: 'markers', icons: [ 'arrow', 'circle', 'cross', 'square', 'star', 'triangle', 'diamond' ] },
     { folder: 'components', icons: [ 'attribute_list', 'legend', 'table_of_contents', 'drawing', 'print', 'filter' ] },
     {
@@ -27,7 +27,7 @@ export class IconService {
       icons: [
         'cursor', 'measure_area', 'measure_length', 'position', 'push_pin', 'measure_length_outline', 'measure_area_outline',
         'draw_point', 'draw_line', 'draw_polygon', 'draw_circle', 'draw_label', 'draw_ellipse', 'draw_rectangle', 'draw_square', 'draw_star',
-        'streetview',
+        'streetview', 'share',
       ],
     },
     { folder: 'style', icons: [ 'bold', 'italic' ] },
