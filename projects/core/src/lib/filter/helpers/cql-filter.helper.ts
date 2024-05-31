@@ -91,7 +91,9 @@ export class CqlFilterHelper {
       return CqlFilterHelper.wrapFilter(CqlFilterHelper.getQueryForDate(filter));
     }
     if (filter.attributeType === AttributeType.BOOLEAN) {
-      return CqlFilterHelper.wrapFilter(`${filter.attribute} = ${filter.condition === FilterConditionEnum.BOOLEAN_TRUE_KEY ? 'true' : 'false'}`);
+      const isTrue = filter.condition === FilterConditionEnum.BOOLEAN_TRUE_KEY ||
+        (filter.condition === FilterConditionEnum.BOOLEAN_FALSE_KEY && filter.invertCondition);
+      return CqlFilterHelper.wrapFilter(`${filter.attribute} = ${isTrue ? 'true' : 'false'}`);
     }
     return null;
   }
@@ -133,8 +135,7 @@ export class CqlFilterHelper {
 
   private static getQueryForDate(filter: AttributeFilterModel) {
     const query: string[] = [filter.attribute];
-    const isTimestampType = filter.attributeType === AttributeType.TIMESTAMP;
-    const isTimestampOnDate = isTimestampType && filter.condition === FilterConditionEnum.DATE_ON_KEY;
+    const isTimestampOnDate = filter.condition === FilterConditionEnum.DATE_ON_KEY;
     if ((filter.condition === FilterConditionEnum.DATE_BETWEEN_KEY && filter.value.length > 1) || isTimestampOnDate) {
       const dateFrom = filter.value[0];
       const dateUntil = isTimestampOnDate ? filter.value[0] : filter.value[1];
@@ -142,16 +143,14 @@ export class CqlFilterHelper {
         query.push('NOT');
       }
       query.push('BETWEEN');
-      query.push(isTimestampType ? `${dateFrom}T00:00:00Z AND ${dateUntil}T23:59:59Z` : `${dateFrom} AND ${dateUntil}`);
+      query.push(`${dateFrom}T00:00:00Z AND ${dateUntil}T23:59:59Z`);
       return `${query.join(' ')}`;
     }
     const cond = filter.condition === FilterConditionEnum.DATE_ON_KEY
       ? (filter.invertCondition ? '!=' : '=')
       : (filter.condition === 'AFTER' || filter.invertCondition) ? 'AFTER' : 'BEFORE';
     query.push(cond);
-    const value = isTimestampType
-      ? (cond === 'AFTER' ? `${filter.value[0]}T23:59:59Z` : `${filter.value[0]}T00:00:00Z`)
-      : filter.value[0];
+    const value = cond === 'AFTER' ? `${filter.value[0]}T23:59:59Z` : `${filter.value[0]}T00:00:00Z`;
     query.push(value);
     return query.join(' ');
   }
