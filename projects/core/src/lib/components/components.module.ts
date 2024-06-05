@@ -12,6 +12,7 @@ import { PrintModule } from './print/print.module';
 import { FilterComponentModule } from './filter/filter-component.module';
 import { EditComponentModule } from './edit/edit-component.module';
 import { RegisteredComponentsModule } from './registered-components-renderer/registered-components.module';
+import { FigureModule } from './figure/figure.module';
 
 @NgModule({
   declarations: [],
@@ -19,6 +20,7 @@ import { RegisteredComponentsModule } from './registered-components-renderer/reg
     CommonModule,
   ],
   exports: [
+    FigureModule,
     FeatureInfoModule,
     MenubarModule,
     TocModule,

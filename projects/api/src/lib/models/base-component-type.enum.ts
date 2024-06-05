@@ -17,4 +17,5 @@ export enum BaseComponentTypeEnum {
   STREETVIEW = 'STREETVIEW',
   EDIT = 'EDIT',
   SHARE_VIEWER = 'SHARE_VIEWER',
+  FIGURE = 'FIGURE'
 }
