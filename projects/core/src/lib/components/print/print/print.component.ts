@@ -183,6 +183,14 @@ export class PrintComponent implements OnInit, OnDestroy {
     this.download('image', (options: PrintImageOptions) => this.printService.downloadMapImage$(options));
   }
 
+  public mailMapImage() {
+    this.mail('image', (options: PrintImageOptions) => this.printService.downloadMapImage$(options));
+  }
+
+  public mailMapPdf() {
+    this.mail('pdf', (options: PrintPdfOptions) => this.printService.downloadPdf$(options));
+  }
+
   private download<T extends PrintOptions>(type: 'image' | 'pdf', printMethod$: (options: T) => PrintResult) {
     const printOptions = this.getPrintOptions();
     const isOptionsOfType = (opts: PrintOptions | null): opts is T => !!opts && opts.type === type;
@@ -197,6 +205,31 @@ export class PrintComponent implements OnInit, OnDestroy {
           return;
         }
         PrintService.downloadDataURL(result.dataURL, result.filename);
+      });
+  }
+
+  private mail<T extends PrintOptions>(type: 'image' | 'pdf', printMethod$: (options: T) => PrintResult) {
+    const printOptions = this.getPrintOptions();
+    const isOptionsOfType = (opts: PrintOptions | null): opts is T => !!opts && opts.type === type;
+    if (!isOptionsOfType(printOptions)) {
+      return;
+    }
+    this.busySubject.next(true);
+    printMethod$(printOptions)
+      .pipe(take(1), finalize(() => this.busySubject.next(false)))
+      .subscribe(result => {
+        if (!result) {
+          return;
+        }
+        // <p>${type === 'image' ? '<img src="' + result.dataURL + '">' : '<a href="' + result.dataURL + '">Download PDF</a>'}</p>
+        const emailBody = `
+          Bijgevoegd is de kaart ${type === 'image' ? 'image' : 'PDF'}.
+          
+        `;
+        const mailtoLink = `mailto:alexander.benerink@student.hu.nl?subject=Map ${type === 'image' ? 'Image' : 'PDF'}&body=${encodeURIComponent(emailBody)}`;
+        PrintService.downloadDataURL(result.dataURL, result.filename);
+        window.location.href = mailtoLink;
+        console.log(mailtoLink);
       });
   }
 

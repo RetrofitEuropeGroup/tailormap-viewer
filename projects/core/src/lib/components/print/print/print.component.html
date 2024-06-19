@@ -49,6 +49,9 @@
             <div class="padding">
               <button mat-flat-button color="primary" type="submit" [disabled]="!exportImageForm.valid" i18n="@@core.print.download-map-image">Download map image</button>
             </div>
+            <div class="padding">
+              <button mat-flat-button color="primary" type="button" (click)="mailMapImage()" [disabled]="!exportImageForm.valid" i18n="@@core.print.mail-map-image">Mail map image</button>
+            </div>
         </form>
       </div>
 
@@ -101,6 +104,9 @@
           </p>
           <div class="padding">
             <button mat-flat-button color="primary" type="submit" [disabled]="!exportPdfForm.valid" i18n="@@core.print.download-map-pdf">Download map PDF</button>
+          </div>
+          <div class="padding">
+            <button mat-flat-button color="primary" type="button" (click)="mailMapPdf()" [disabled]="!exportPdfForm.valid" i18n="@@core.print.mail-map-pdf">Mail map PDF</button>
           </div>
         </form>
       </div>
